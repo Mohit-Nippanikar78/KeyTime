@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Screen Time",
+  "version": "1.0",
+  "description": "This extension will help you to track your screen time.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/images/icon16.png",
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png"
+    }
+  }
+}
