@@ -20,23 +20,23 @@ chrome.tabs.onUpdated.addListener(async (tabId) => {
     favIconUrl === ""
       ? "https://www.freeiconspng.com/thumbs/www-icon/www-domain-icon-0.png"
       : favIconUrl;
-  // Generate the screen time data for the active tab.
+  // Generate the screen time data for  the active tab.
   await generateScreenTime(tabUrl, favIconUrl);
   return;
 });
 
-chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
-  let screenTime = await chrome.storage.sync.get("screenTime");
-  screenTime = screenTime.screenTime || [];
-  screenTime.map((t) => {
-    if (t.accessTime[t.accessTime.length - 1].endTime === null) {
-      t.accessTime[t.accessTime.length - 1].endTime = new Date().getTime();
-    }
-  });
-  console.log(screenTime);
-  await chrome.storage.sync.set({ screenTime });
-  return;
-});
+// This event is fired when a window is removed to end the time of the last active tab.
+// chrome.windows.onRemoved.addListener(async function (windowId) {
+//   let screenTime = await chrome.storage.local.get("screenTime");
+//   screenTime = screenTime.screenTime || [];
+//   screenTime.map((t) => {
+//     if (t.accessTime[t.accessTime.length - 1].endTime === null) {
+//       t.accessTime[t.accessTime.length - 1].endTime = new Date().getTime();
+//     }
+//   });
+//   await chrome.storage.local.set({ screenTime });
+//   return;
+// });
 
 //This event is fired when the active tab is changed.
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
@@ -57,7 +57,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 async function generateScreenTime(tabUrl, favIconUrl) {
   console.log("Generating for ", tabUrl);
   // Get the screen time data from the storage.
-  let screenTime = await chrome.storage.sync.get("screenTime");
+  let screenTime = await chrome.storage.local.get("screenTime");
   screenTime = screenTime.screenTime || [];
 
   // If the tab is already present in the screen time data, update the access time.
@@ -88,7 +88,7 @@ async function generateScreenTime(tabUrl, favIconUrl) {
       accessTime: [{ startTime: new Date().getTime(), endTime: null }],
     });
   }
-  await chrome.storage.sync.set({ screenTime });
+  await chrome.storage.local.set({ screenTime });
   console.log("Generated for ", tabUrl);
   return;
 }

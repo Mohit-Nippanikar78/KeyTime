@@ -34,7 +34,7 @@ async function setScreenTimeData(type = "today") {
 }
 
 resetScreenTimeButton.addEventListener("click", () => {
-  chrome.storage.sync.set({ screenTime: [] });
+  chrome.storage.local.set({ screenTime: [] });
   setScreenTimeData();
 });
 
@@ -72,7 +72,7 @@ setScreenTimeData();
 
 async function generateTempScreenTime() {
   // Get the screen time data from the storage.
-  let screenTime = await chrome.storage.sync.get("screenTime");
+  let screenTime = await chrome.storage.local.get("screenTime");
   screenTime = screenTime.screenTime || [];
 
   await screenTime.map((t, i) => {
