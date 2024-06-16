@@ -3,6 +3,8 @@ import { aggregateData, calcTotalTime } from "./utils.js";
 let rankingButtons = document.querySelectorAll(".ranking-btns");
 let totalTimeDiv = document.getElementById("total-time");
 let resetScreenTimeButton = document.getElementById("resetScreenTimeButton");
+let infoicon = document.getElementById("infoicon");
+let infoalert = document.getElementById("info-alert");
 
 async function setScreenTimeData(type = "today") {
   let screenTime = await generateTempScreenTime();
@@ -38,6 +40,13 @@ resetScreenTimeButton.addEventListener("click", () => {
   setScreenTimeData();
 });
 
+infoicon.addEventListener("mouseover", (e) => {
+  infoalert.style.opacity = 1;
+});
+infoicon.addEventListener("mouseout", (e) => {
+  infoalert.style.opacity = 0;
+});
+
 // Get Today Screen Time Data
 let rankingToday = document.getElementById("rankingToday");
 rankingToday.addEventListener("click", () => {
@@ -49,24 +58,24 @@ rankingToday.addEventListener("click", () => {
 });
 
 // Get Weekly Screen Time Data
-let rankingWeekly = document.getElementById("rankingWeekly");
-rankingWeekly.addEventListener("click", () => {
-  rankingButtons.forEach((btn) =>
-    btn.classList.remove("ranking-button-active")
-  );
-  rankingWeekly.classList.add("ranking-button-active");
-  setScreenTimeData("weekly");
-});
+// let rankingWeekly = document.getElementById("rankingWeekly");
+// rankingWeekly.addEventListener("click", () => {
+//   rankingButtons.forEach((btn) =>
+//     btn.classList.remove("ranking-button-active")
+//   );
+//   rankingWeekly.classList.add("ranking-button-active");
+//   setScreenTimeData("weekly");
+// });
 
 // Get Monthly Screen Time Data
-let rankingMonthly = document.getElementById("rankingMonthly");
-rankingMonthly.addEventListener("click", () => {
-  rankingButtons.forEach((btn) =>
-    btn.classList.remove("ranking-button-active")
-  );
-  rankingMonthly.classList.add("ranking-button-active");
-  setScreenTimeData("monthly");
-});
+// let rankingMonthly = document.getElementById("rankingMonthly");
+// rankingMonthly.addEventListener("click", () => {
+//   rankingButtons.forEach((btn) =>
+//     btn.classList.remove("ranking-button-active")
+//   );
+//   rankingMonthly.classList.add("ranking-button-active");
+//   setScreenTimeData("monthly");
+// });
 
 setScreenTimeData();
 
